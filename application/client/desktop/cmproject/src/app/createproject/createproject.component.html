@@ -1,0 +1,39 @@
+<h2 class="screen-align">Createproject</h2>
+<label id="template-i07j" class="label">Project Name</label>
+<input id="template-iqhg" placeholder="Enter Project Name"
+[(ngModel)]="project.projectname" [ngModelOptions]="{standalone: true}"
+class="input form-control" />
+<label id="template-im9f" class="label">Technology</label>
+<input id="template-id3v" placeholder="Enter Technology Name"
+[(ngModel)]="project.technology" [ngModelOptions]="{standalone: true}"
+class="input form-control" />
+<div id="template-irxx" class="row">
+    <div id="template-i8ak" class="cell">
+        <label id="template-i5gu" class="label">Manager</label>
+        <div id="template-izbyu" class="">
+            <ng-select id="template-i12kr" name="dynamicdropdown_template-i12kr" [searchable]="true"
+            [virtualScroll]="true" [items]="manageritemArray" bindLabel="managername"
+            bindValue="managername" [(ngModel)]="project.manager" [ngModelOptions]="{standalone: true}"
+            (click)="managerGpGetAllValues()" class="form-control"></ng-select>
+        </div>
+    </div>
+    <div id="template-iorn" class="cell">
+        <label id="template-ihx4i" class="label">Client</label>
+        <div id="template-i6b07" class="">
+            <ng-select id="template-ic33d" name="dynamicdropdown_template-ic33d" [searchable]="true"
+            [virtualScroll]="true" [items]="clientitemArray" bindLabel="clientname"
+            bindValue="clientname" [(ngModel)]="project.client" [ngModelOptions]="{standalone: true}"
+            (click)="clientGpGetAllValues()" class="form-control"></ng-select>
+        </div>
+    </div>
+    <div id="template-i3ev" class="cell">
+        <label id="template-iinmm" class="label">Lead</label>
+        <div id="template-idvtk" class="">
+            <ng-select id="template-i5ke7" name="dynamicdropdown_template-i5ke7" [searchable]="true"
+            [virtualScroll]="true" [items]="leaditemArray" bindLabel="leadname" bindValue="leadname"
+            [(ngModel)]="project.lead" [ngModelOptions]="{standalone: true}" (click)="leadGpGetAllValues()"
+            class="form-control"></ng-select>
+        </div>
+    </div>
+</div>
+<button id="template-itb8l" (click)="GpCreate()" class="button btn btn-primary">Create</button>

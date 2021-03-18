@@ -1,0 +1,10 @@
+export const SECURITYURL = process.env.SECURITYURL;
+export const AUTHPROXYURL = process.env.AUTHPROXYURL;
+export const ADMINURL = process.env.ADMINURL;
+export const CAMUNDAURL = process.env.CAMUNDAURL;
+export const PROJECTURL = process.env.PROJECTURL;
+export const USERURL = process.env.USERURL;
+export const MANAGERURL = process.env.MANAGERURL;
+export const CLIENTURL = process.env.CLIENTURL;
+export const LEADURL = process.env.LEADURL;
+export const PLANURL = process.env.PLANURL;

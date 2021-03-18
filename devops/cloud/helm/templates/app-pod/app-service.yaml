@@ -1,0 +1,48 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    name: {{ .Values.app.prefix }}-app
+  name: {{ .Values.app.prefix }}-app
+  namespace: {{ .Values.app.namespace }}
+spec:
+  type: NodePort
+  ports:
+  - name: {{ .Values.service.authproxy.name }}
+    port: {{ .Values.service.authproxy.port }}
+    targetPort: {{ .Values.service.authproxy.targetPort }}
+  - name: {{ .Values.service.camunda.name }}
+    port: {{ .Values.service.camunda.port }}
+    targetPort: {{ .Values.service.camunda.targetPort }}
+  - name: {{ .Values.service.security.name }}
+    port: {{ .Values.service.security.port }}
+    targetPort: {{ .Values.service.security.targetPort }}
+  - name: {{ .Values.service.admin.name }}
+    port: {{ .Values.service.admin.port }}
+    targetPort: {{ .Values.service.admin.targetPort }}
+  - name: {{ .Values.service.project.name }}
+    port: {{ .Values.service.project.port }}
+    targetPort: {{ .Values.service.project.targetPort }}
+
+  - name: {{ .Values.service.user.name }}
+    port: {{ .Values.service.user.port }}
+    targetPort: {{ .Values.service.user.targetPort }}
+
+  - name: {{ .Values.service.manager.name }}
+    port: {{ .Values.service.manager.port }}
+    targetPort: {{ .Values.service.manager.targetPort }}
+
+  - name: {{ .Values.service.client.name }}
+    port: {{ .Values.service.client.port }}
+    targetPort: {{ .Values.service.client.targetPort }}
+
+  - name: {{ .Values.service.lead.name }}
+    port: {{ .Values.service.lead.port }}
+    targetPort: {{ .Values.service.lead.targetPort }}
+
+  - name: {{ .Values.service.plan.name }}
+    port: {{ .Values.service.plan.port }}
+    targetPort: {{ .Values.service.plan.targetPort }}
+
+  selector:
+    name: {{ .Values.app.prefix }}-app

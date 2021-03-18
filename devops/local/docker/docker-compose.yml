@@ -1,0 +1,145 @@
+version: "3.8"
+services:
+  mongo:
+    image: geppettotest/mongo-local:april2020
+    container_name: mongo-7625
+    restart: unless-stopped
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=admin
+      - MONGO_INITDB_ROOT_PASSWORD=password
+    volumes:
+      - cmproject_7625-volume:/data/db
+    ports:
+      - "27018:27017"
+    healthcheck:
+      test: echo 'db.runCommand({serverStatus:1}).ok' | mongo admin -u root -p root --quiet | grep 1
+      interval: 10s
+      timeout: 10s
+      retries: 5
+      start_period: 40s
+
+  camunda:
+    image: geppettodistribution/camunda-local:Jan2021
+    container_name: camunda-7625
+    ports:
+      - "0000:8080"
+
+  authproxy:
+    build: ../../../application/services/default_services/authproxy
+    image: authproxy-7625
+    container_name: authproxy-7625
+    ports:
+      - "0000:8001"
+    env_file: .env
+    depends_on:
+      - mongo
+      - camunda
+
+  securitymanager:
+    build: ../../../application/services/default_services/securitymanager
+    image: securitymanager-7625
+    container_name: securitymanager-7625
+    ports:
+      - "8003:8003"
+    env_file: .env
+    depends_on:
+      - mongo
+      - camunda
+
+  camundaservice:
+    build: ../../../application/services/default_services/camunda
+    image: camundaservice-7625
+    container_name: camundasvc-7625
+    ports:
+      - "8002:8002"
+    env_file: .env
+    depends_on:
+      - mongo
+      - camunda
+      - securitymanager
+
+  apigateway:
+    build: ../../../application/services/custom_services/apigateway
+    image: apigateway-7625
+    container_name: apigateway-7625
+    ports:
+      - "8000:8000"
+    env_file: .env
+    depends_on:
+      - camunda
+      - camundaservice
+      - authproxy
+      - securitymanager
+      - project
+      - user
+      - manager
+      - client
+      - lead
+      - plan
+
+
+
+  project: 
+    build: ../../../application/services/custom_services/project
+    image: project-7625
+    container_name: project-7625
+    ports: 
+      - 8017:8017
+    env_file: .env
+    depends_on:
+      - mongo
+
+  user: 
+    build: ../../../application/services/custom_services/user
+    image: user-7625
+    container_name: user-7625
+    ports: 
+      - 8018:8018
+    env_file: .env
+    depends_on:
+      - mongo
+
+  manager: 
+    build: ../../../application/services/custom_services/manager
+    image: manager-7625
+    container_name: manager-7625
+    ports: 
+      - 8019:8019
+    env_file: .env
+    depends_on:
+      - mongo
+
+  client: 
+    build: ../../../application/services/custom_services/client
+    image: client-7625
+    container_name: client-7625
+    ports: 
+      - 8020:8020
+    env_file: .env
+    depends_on:
+      - mongo
+
+  lead: 
+    build: ../../../application/services/custom_services/lead
+    image: lead-7625
+    container_name: lead-7625
+    ports: 
+      - 8021:8021
+    env_file: .env
+    depends_on:
+      - mongo
+
+  plan: 
+    build: ../../../application/services/custom_services/plan
+    image: plan-7625
+    container_name: plan-7625
+    ports: 
+      - 8022:8022
+    env_file: .env
+    depends_on:
+      - mongo
+
+
+volumes:
+  cmproject_7625-volume:
+    driver: local
